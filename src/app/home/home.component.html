@@ -1,0 +1,65 @@
+<div class="containers">
+    <div class="spend-card">
+       
+        <div>
+            <p class="title">Income</p>
+            <p class="amount">₹{{income}}</p>
+            <a href="/income" class="btn bt btn-success">See all →</a>
+
+        </div>
+        <div>
+            <!-- <p class="today">TODAY IS</p> -->
+            <!-- <p class="date">Fri 5 2025</p> -->
+    
+            <p class="title">OVERALL SPEND</p>
+            <p class="amount">₹{{spendAmount}}</p>
+            
+            </div>
+        <div>
+            <p class="title">Labour Expense</p>
+            <p class="amount">₹{{labour}}</p>
+            <a href="/labour" class="btn bt btn-success">See all →</a>
+
+        </div>
+    </div>
+ <div class="wallets">
+    <div class="wallet-box">
+        <div class="wallet-left">
+            <img src="../../assets/wallet-icon-on-transparent-background-free-png.webp" alt="wallet" class="wallet-icon">
+            <p class="wallet-title"> Wallet</p>
+        </div>
+        <a href="/walletTransaction" class="see-all">See all →</a>
+        <p class="wallet-amount">₹{{walletAmount}} </p>
+
+    </div>
+    <div class="wallet-box">
+        <div class="wallet-left">
+            <img src="../../assets/bank2.svg" alt="wallet" class="wallet-icon">
+
+            <p class="wallet-title "> Bank Transfer</p>
+        </div>
+        <a href="/banktransfer" class="see-all">See all →</a>
+        <!-- <p class="wallet-amount">₹{{walletAmount}} </p> -->
+
+    </div>
+ </div>
+ 
+    <div class="top-spending">
+        <div class="spending-header">
+            <h3>Recent Transaction</h3>
+            <a href="/Work" class="btn bt btn-success">See all →</a>
+        </div>
+    
+        <div class="spending-item" *ngFor="let Transaction of RecentTransaction">
+            <!-- <img src="spotify-icon.png" alt="Spotify" class="spending-icon"> -->
+            <div class="spending-details">
+                <p class="spending-title">{{Transaction.material}}</p>
+                <p class="spending-date">{{Transaction.date}}</p>
+            </div>
+            <p class="spending-amount">{{Transaction.cost}}</p>
+        </div>
+    
+       
+    </div>
+    
+</div>

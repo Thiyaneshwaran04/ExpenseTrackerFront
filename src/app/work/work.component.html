@@ -1,0 +1,209 @@
+<div class="container"> 
+    <div class="buttons">
+        <button class="add-btn" (click)="openModal()">+ Add Material</button>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            Add Category
+          </button>
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal1">
+            View Category
+          </button>
+          <div class="form-group">
+            <label for="material">Material:</label>
+            <select id="material" [(ngModel)]="filtermat" (change)="onChange()">
+                <option value="">Select Material</option>
+                <option *ngFor="let material of materials" [value]="material.name">
+                    {{ material.name }}
+                </option>
+                <!-- <option value="Others">Others</option> -->
+            </select>
+        </div>
+        
+        <!-- Sub Material Dropdown (Only visible when applicable) -->
+        <div class="form-group" *ngIf="!isOtherMaterials">
+            <label for="subMaterial">Sub Material:</label>
+            <select id="subMaterial" [(ngModel)]="filtersubmat">
+                <option value="">Select Sub Material</option>
+                <option *ngFor="let subMaterial of subMaterialss" [value]="subMaterial">
+                    {{ subMaterial }}
+                </option>
+            </select>
+        </div>
+        
+          <!-- <input type="text" [(ngModel)]="filtermat">
+          <input type="text" [(ngModel)]="filtersubmat"> -->
+      
+          <button (click)="getFilter()">Submit</button>
+          <button (click)="clear()">clear</button>
+    </div>
+
+    <div >
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>SI.NO</th>
+                    <th>Date</th>
+                    <th>Material</th>
+                    <th>SubMaterial</th>
+                    <th>Unit</th>
+                    <th>Cost (₹)</th>
+                    <th>Payment Method</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let materials of material; let i = index">
+                    <td>{{ i + 1 }}</td> 
+                    <td>{{ materials.date }}</td>
+                    <td>{{ materials.material }}</td>
+                    <td>{{materials.submaterial
+                    }}</td>
+                    <td>{{ materials.unit }}</td>
+                    <td>{{ materials.cost }}</td>
+                    <td>{{ materials.paymentMethod }}</td>
+                </tr>
+                <tr *ngIf="!material || material.length === 0">
+                    <td colspan="7">No transactions found</td>
+                  </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal-overlays" *ngIf="isModalOpen" (click)="closeModal()">
+    <div class="modal-contents" (click)="$event.stopPropagation()">
+        <h3>Add New Material</h3>
+
+        <div class="form-group">
+            <label for="date">Date:</label>
+            <input type="date" id="date" [(ngModel)]="newMaterial.date">
+        </div>
+
+        <div class="form-group">
+            <label for="material">Material:</label>
+            <select id="material" [(ngModel)]="newMaterial.material" (change)="onMaterialChange()">
+                <option value="">Select Material</option>
+                <option *ngFor="let material of materials" [value]="material.name">
+                    {{ material.name }}
+                </option>
+                <option value="Others">Others</option>
+            </select>
+        </div>
+        
+        <!-- Sub Material Dropdown (Only visible when applicable) -->
+        <div class="form-group" *ngIf="!isOtherMaterial && subMaterials.length > 0">
+            <label for="subMaterial">Sub Material:</label>
+            <select id="subMaterial" [(ngModel)]="newMaterial.subMaterial">
+                <option value="">Select Sub Material</option>
+                <option *ngFor="let subMaterial of subMaterials" [value]="subMaterial">
+                    {{ subMaterial }}
+                </option>
+            </select>
+        </div>
+        
+        <!-- Manual Input for 'Others' -->
+        <div class="form-group" *ngIf="isOtherMaterial">
+            <label for="customMaterial">Enter Material Type:</label>
+            <input type="text" id="customMaterial" [(ngModel)]="newMaterial.subMaterial" placeholder="Type material type">
+        </div>
+
+        <div class="form-group">
+            <label for="unit">Unit:</label>
+            <input type="text" id="unit" [(ngModel)]="newMaterial.unit" placeholder="Enter unit">
+        </div>
+
+        <div class="form-group">
+            <label for="cost">Cost (₹):</label>
+            <input type="number" id="cost" [(ngModel)]="newMaterial.cost" placeholder="Enter cost">
+        </div>
+        <div class="form-group">
+            <label for="paymentMethod">Payment Method:</label>
+            <select id="paymentMethod" [(ngModel)]="newMaterial.paymentMethod">
+                <option value="">Select Payment Method</option>
+                <option value="Wallet">Wallet</option>
+                <option value="via Bank">via Bank</option>
+            </select>
+        </div> 
+        
+
+        <div class="button-container">
+            <button class="close-btn" (click)="closeModal()">Close</button>
+            <button class="save-btn" (click)="saveMaterial()">Save</button>
+        </div>
+    </div>
+</div>
+   <!-- Modal -->
+<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content cont">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <h3>Categories List:</h3>
+          <!-- Added a scrollable container for the table -->
+          <div class="table-container">
+            <table class="category-table">
+                <thead>
+                  <tr>
+                    <th class="table-header category-column">Category</th> 
+                    <th class="table-header subcategory-column">Subcategories</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let category of materials" class="table-row" (click)="toggleSubcategories(category)">
+                    <td class="category-name">{{ category.name }}</td>
+                    <td class="subcategory-list">
+                      <span *ngFor="let salary of category.subMaterials; let last = last" class="subcategory-item">
+                        {{ salary }}<span *ngIf="!last">, </span>
+                      </span>
+                      <span *ngIf="category.subMaterials.length === 0" class="no-salary-text">No salary available</span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              
+          </div>
+        </div>
+     
+
+  
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+              <h5 class="modal-title" id="categoryModalLabel">Add Category</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+      
+            <!-- Modal Body -->
+            <div class="modal-body">
+              <!-- Input for New Category -->
+              <input type="text" placeholder="Enter Category" [(ngModel)]="materialname" class="form-control" />
+      
+         
+      
+              <!-- Modify or Add Subcategory -->
+              <input type="text" placeholder="Enter Subcategory" [(ngModel)]="submaterial" class="form-control mt-3" />
+            </div>
+      
+            <!-- Modal Footer -->
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+              <button type="button" class="btn btn-primary" (click)="addCategory()">Add</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+  
+  
+  

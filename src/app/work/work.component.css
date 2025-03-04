@@ -1,0 +1,301 @@
+/* Container */
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Add Button */
+.add-btn {
+    background-color: green;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.add-btn:hover {
+    background-color: darkgreen;
+}
+
+/* Table Styling */
+.table {
+    width: 100%;
+    overflow-x: auto;
+}
+
+/* Responsive Table */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 600px;
+}
+
+th, td {
+    text-align: left;
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+    white-space: nowrap;
+}
+
+th {
+    background-color: #f4f4f4;
+}
+
+/* Hover Effect */
+tbody tr:hover {
+    background-color: #f9f9f9;
+    transition: 0.3s;
+}
+
+/* Modal Styling */
+.modal-overlays {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+/* Ensure modal is properly centered */
+.modal-contents {
+    background: white;
+    padding: 20px;
+    width: 400px; 
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    animation: fadeIn 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Fix input fields to stay within the box */
+.modal-contents .form-group {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+.modal-contents label {
+    font-weight: bold;
+    font-size: 14px;
+    color: #333;
+    text-align: left;
+    margin-bottom: 5px;
+}
+
+/* Ensure input fields do not overflow */
+.modal-contents input {
+    width: calc(100% - 20px); /* Adjust for padding */
+    padding: 10px;
+    margin: 0 auto;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: border 0.3s ease-in-out;
+    box-sizing: border-box; /* Prevents extra spacing issues */
+}
+
+.modal-contents input:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+
+/* Button Styling */
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.close-btn, .save-btn {
+    flex: 1;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    margin: 5px;
+}
+
+.close-btn {
+    background-color: red;
+    color: white;
+}
+
+.save-btn {
+    background-color: green;
+    color: white;
+}
+.form-group select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: border 0.3s ease-in-out;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+.form-group select:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+/* Reduce modal padding */
+.modal-body {
+    padding: 15px;
+  }
+  /* Reduce overall table size */
+.category-table {
+    width: 100% !important;
+    border-collapse: collapse;
+    font-size: 13px; /* Reduce font size */
+  }
+  
+  /* Header Styling */
+  .table-header {
+    background-color: #f4f4f4;
+    font-weight: bold;
+    padding: 6px; /* Reduce padding */
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    width:100% ;
+  }
+  
+  /* Reduce column width */
+  .category-column {
+    width: 30%; /* Adjust category column width */
+  }
+  
+  .subcategory-column {
+    width: 70%; /* Adjust subcategory column width */
+  }
+  
+  /* Row Styling */
+  .table-row:hover {
+    background-color: #f9f9f9;
+  }
+  
+  /* Category column */
+  .category-name {
+    padding: 4px; /* Reduce padding */
+    font-weight: bold;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  /* Subcategory column */
+  .subcategory-list {
+    padding: 4px; /* Reduce padding */
+    border-bottom: 1px solid #ddd;
+    white-space: nowrap; /* Keep subcategories inline */
+  }
+  
+  /* Subcategories inline */
+  .subcategory-item {
+    display: inline;
+    font-size: 12px;
+  }
+  
+  /* No subcategory message */
+  .no-salary-text {
+    color: #777;
+    font-style: italic;
+    font-size: 12px;
+  }
+  .buttons{
+    display: flex;
+    justify-content: space-around;
+}.buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.add-btn {
+    background-color: #28a745;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.add-btn:hover {
+    background-color: #218838;
+}
+
+.btn {
+    padding: 8px 12px;
+    font-size: 14px;
+    border-radius: 5px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+    min-width: 200px;
+}
+
+label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+select {
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    background: white;
+    cursor: pointer;
+}
+
+button {
+    margin-top: 10px;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+@media (max-width: 768px) {
+    .buttons {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .form-group {
+        width: 100%;
+    }
+
+    button {
+        width: 100%;
+    }
+}

@@ -1,0 +1,155 @@
+<div class="container">
+  <div class="buttonGroup">
+    <button class="add-btn" (click)="openModal()">+ Add Labour Transaction</button>  
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+      Add Category
+    </button>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal1">
+      View Category
+    </button>
+    <select [(ngModel)]="filtername" >
+      <option *ngFor="let labour of labourList" [value]="labour.name">
+        {{ labour.name }}
+      </option>
+    </select>
+  <button (click)="getFilter()">Submit</button>
+  <button (click)="clear()">clear</button>
+  </div>
+   
+    <table>
+      <thead>
+        <tr>
+          <th>Sl.No</th>
+          <th>Date</th>
+          <th>Labour Name</th>
+          <th>Working Day</th>
+          <th>Per day</th>
+          <th>Salary (₹)</th>
+
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let materials of labourTransaction; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ materials.date }}</td>
+            <td>{{ materials.labourname }}</td>
+            <td>{{materials.workingDays}}</td>
+            <td>{{ materials.perday}}</td>
+            <td>{{ materials.
+              salary }}</td>
+            
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+  <!-- Popup Modal -->
+  <div class="modals" *ngIf="showModal">
+    <div class="modal-contents">
+      <h2>Add Labour Transaction</h2>
+  
+      <label>Date:</label>
+      <input type="date" [(ngModel)]="newLabour.date" />
+  
+      <label>Labour Name:</label>
+      <select [(ngModel)]="newLabour.labourname" (change)="updateSalary()">
+        <option *ngFor="let labour of labourList" [value]="labour.name">
+          {{ labour.name }}
+        </option>
+      </select>
+  
+      <label>Per Day Salary (Auto-Filled):</label>
+      <input type="number" [(ngModel)]="newLabour.perday" disabled />
+  
+      <label>Days Worked:</label>
+      <input type="number" [(ngModel)]="newLabour.workingDays
+      " (input)="calculateTotalAmount()" />
+  
+      <label>Total Amount (₹):</label>
+      <input type="number" [(ngModel)]="newLabour.salary" disabled />
+  
+      <div class="modal-actions">
+        <button (click)="addLabour()">Add</button>
+        <button class="cancel" (click)="closeModal()">Cancel</button>
+      </div>
+    </div>
+  </div>
+  
+  
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+              <h3>Categories List:</h3>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Category</th> 
+                    <th>Subcategories</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let category of labourList" (click)="toggleSubcategories(category)">
+                    <td><strong>{{ category.name }}</strong></td>
+                    <td>
+                      <!-- Display per-day salary as a list if multiple exist -->
+                      <ul *ngIf="category.perday.length > 0">
+                        <li *ngFor="let salary of category.perday">{{ salary }}</li>
+                      </ul>
+                      <!-- Handle case when no salary is available -->
+                      <div *ngIf="category.perday.length === 0">
+                        <span>No salary available</span>
+                      </div>
+                    </td>
+                  </tr>
+                  
+                </tbody>
+              </table>
+              
+              
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <!-- Modal Header -->
+          <div class="modal-header">
+            <h5 class="modal-title" id="categoryModalLabel">Add Category</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+    
+          <!-- Modal Body -->
+          <div class="modal-body">
+            <!-- Input for New Category -->
+            <input type="text" placeholder="Enter Category" [(ngModel)]="labournames" class="form-control" />
+    
+       
+    
+            <!-- Modify or Add Subcategory -->
+            <input type="number" placeholder="Enter Salary Per Day" [(ngModel)]="perdaysal" class="form-control mt-3" />
+          </div>
+    
+          <!-- Modal Footer -->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-primary" (click)="addCategory()">Add</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+
+
+
+    

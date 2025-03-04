@@ -1,0 +1,210 @@
+.body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.container {
+    width: 90%;
+    max-width: 1000px;
+    margin: 10px;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    overflow-x: auto;
+}
+
+.btns {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.btns:hover {
+    background-color: #45a049;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+    white-space: nowrap;
+}
+
+th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+td {
+    background-color: #f9f9f9;
+}
+
+tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+.modal-overlays {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+/* Ensure modal is properly centered */
+.modal-contents {
+    background: white;
+    padding: 20px;
+    width: 400px; /* Adjust width as needed */
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    animation: fadeIn 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+   
+}
+
+/* Fix input fields to stay within the box */
+.modal-contents .form-group {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+.modal-contents label {
+    font-weight: bold;
+    font-size: 14px;
+    color: #333;
+    text-align: left;
+    margin-bottom: 5px;
+}
+.form-group {
+    margin-bottom: 15px;
+  }
+  
+  select, input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+  }
+/* Ensure input fields do not overflow */
+.modal-contents input {
+    width: calc(100% - 20px); /* Adjust for padding */
+    padding: 10px;
+    margin: 0 auto;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: border 0.3s ease-in-out;
+    box-sizing: border-box; /* Prevents extra spacing issues */
+}
+
+.modal-contents input:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+
+/* Button Styling */
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.close-btns, .save-btns {
+    flex: 1;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    margin: 5px;
+}
+
+
+.close-btns {
+    background: #ff4d4d;
+    color: white;
+    padding: 8px;
+    border: none;
+    margin-right: 10px;
+  }
+  
+  .save-btns {
+    background: #4caf50;
+    color: white;
+    padding: 8px;
+    border: none;
+  }
+
+@media (max-width: 480px) {
+    .btns {
+        width: 100%;
+        font-size: 16px;
+        padding: 12px;
+    }
+
+    th, td {
+        padding: 6px;
+        font-size: 12px;
+    }
+    .modal-contents {
+        width: 90%; /* Adjust modal width */
+        padding: 15px;
+    }
+}table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  th, td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+  }
+  
+  button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #45a049;
+  }
+.buttonGroup{
+    display: flex;
+    justify-content: space-around;
+    margin: 3px;
+}  
+
+.categ{
+    width:45% !important;
+}

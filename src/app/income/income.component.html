@@ -1,0 +1,200 @@
+<div class="body">
+    <div class="container">
+
+<div class="buttonGroup">
+    <button class="btns" (click)="openTransactionModal()">+ Add Transaction</button>
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#categoryModal">
+      Add Category
+    </button>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+      View Category
+    </button>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal1">
+      Filter
+    </button>
+    <button (click)="clear()">clear</button>
+<div>
+  <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Modal title</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+        <label for="subcategory" class="categ">category:</label>
+
+          <select id="category"  class="categ"[(ngModel)]="filtercat" (change)="onChange()">
+            <option value="">-- Select Category --</option>
+            <option *ngFor="let category of categories" [value]="category.name">
+                {{ category.name }}
+            </option>
+        </select>
+      </div>
+      
+      <!-- Subcategory (Dropdown for ATM, Disabled for GM & MTH, Input for Others) -->
+      <div class="form-group" *ngIf="!isOtherCategory">
+        <label for="subcategory" class="categ">Subcategory:</label>
+        <select id="subcategory"  class="categ" [(ngModel)]="filtersubcat" >
+            <option value="">-- Select Subcategory --</option>
+            <option *ngFor="let subcategory of subcategoriess" [value]="subcategory">
+                {{ subcategory }}
+            </option>
+        </select>
+      <br> <br> <br>
+          <button (click)="getFilter()">Submit</button>
+
+      </div>
+        </div>
+     
+      </div>
+    </div>
+  </div>
+</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>SI.NO</th>
+                    <th>Date</th>
+                    <th>Category</th>
+                    <th>Subcategory</th>
+                    <th>Amount (₹)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let transaction of walletTransaction; let i = index">
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ transaction.date }}</td>
+                    <td>{{ transaction.category }}</td>
+                    <td>{{ transaction.subcategory }}</td>
+
+                    <td>₹{{ transaction.amount }}</td>
+                </tr>
+                <tr *ngIf="!walletTransaction || walletTransaction.length === 0">
+                    <td colspan="5">No transactions found</td>
+                  </tr>
+                  
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal-overlays" *ngIf="isModalOpen" (click)="closeTransactionModal()">
+        <div class="modal-contents" (click)="$event.stopPropagation()">
+            <h3>Add New Transaction</h3>
+
+            <div class="form-group">
+                <label for="date">Date:</label>
+                <input type="date" id="date" [(ngModel)]="newTransaction.date">
+            </div>
+            <div class="form-group">
+                <label for="category">Category:</label>
+                <select id="category" [(ngModel)]="newTransaction.category" (change)="onCategoryChange()">
+                    <option value="">-- Select Category --</option>
+                    <option *ngFor="let category of categories" [value]="category.name">
+                        {{ category.name }}
+                    </option>
+                </select>
+            </div>
+            
+            <!-- Subcategory (Dropdown for ATM, Disabled for GM & MTH, Input for Others) -->
+            <div class="form-group" *ngIf="!isOtherCategory">
+                <label for="subcategory">Subcategory:</label>
+                <select id="subcategory" [(ngModel)]="newTransaction.subcategory" [disabled]="subcategories.length === 0">
+                    <option value="">-- Select Subcategory --</option>
+                    <option *ngFor="let subcategory of subcategories" [value]="subcategory">
+                        {{ subcategory }}
+                    </option>
+                </select>
+            </div>
+            
+            <!-- Manual Input for 'Others' Category -->
+            <div class="form-group" *ngIf="isOtherCategory">
+                <label for="customSubcategory">Enter Subcategory:</label>
+                <input type="text" id="customSubcategory" [(ngModel)]="newTransaction.subcategory" placeholder="Type subcategory">
+            </div>
+            <div class="form-group">
+                <label for="amount">Amount (₹):</label>
+                <input type="number" id="amount" [(ngModel)]="newTransaction.amount" placeholder="Enter amount">
+            </div>
+
+            <button class="close-btns" (click)="closeTransactionModal()">Close</button>
+            <button class="save-btns" (click)="addTransaction()">Save</button>
+        </div>
+    </div>
+</div>
+
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <h3>Categories List:</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>Category</th>
+                  <th>Subcategories</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let category of categories" (click)="toggleSubcategories(category)">
+                  <td><strong>{{ category.name }}</strong></td>
+                  <td>
+                    <!-- Display Subcategories if available -->
+                    <ul *ngIf="category.subcategories.length > 0 && category.subcategories[0] !== '-'">
+                      <li *ngFor="let sub of category.subcategories">{{ sub }}</li>
+                    </ul>
+                    <!-- Handle case when subcategory is '-' or empty (for 'Others' or empty subcategory cases) -->
+                    <div *ngIf="category.subcategories.length === 0 || category.subcategories[0] === '-'">
+                      <span>No subcategories available</span>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            
+            
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<!-- Modal -->
+<div class="modal fade" id="categoryModal" tabindex="-1" aria-labelledby="categoryModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h5 class="modal-title" id="categoryModalLabel">Add Category</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+  
+        <!-- Modal Body -->
+        <div class="modal-body">
+          <!-- Input for New Category -->
+          <input type="text" placeholder="Enter Category" [(ngModel)]="categ" class="form-control" />
+  
+     
+  
+          <!-- Modify or Add Subcategory -->
+          <input type="text" placeholder="Enter Subcategory" [(ngModel)]="subcateg" class="form-control mt-3" />
+        </div>
+  
+        <!-- Modal Footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary" (click)="addCategory()">Add</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
